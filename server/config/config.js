@@ -14,7 +14,11 @@ let urlDB;
 
 if (process.env.NODE_ENV == 'dev')
     urlDB = 'mongodb://localhost:27017/cafe';
-else
-    urlDB = 'mongodb+srv://pacouser:pacouser@cluster0-prrvi.mongodb.net/test?retryWrites=true&w=majority';
+else {
+    //urlDB = 'mongodb+srv://pacouser:pacouser@cluster0-prrvi.mongodb.net/test?retryWrites=true&w=majority';
+    //establezco variable de entorno con heroku para k no se va el pass en plano en git
+    //heroku config:set MONGO_URI="mongodb+srv://pacouser:pacouser@cluster0-prrvi.mongodb.net/test?retryWrites=true&w=majority"
+    urlDB = process.env.MONGO_URI;
+}
 
 process.env.URLDB = urlDB;
