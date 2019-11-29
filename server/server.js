@@ -3,50 +3,34 @@ require('./config/config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+//conectar a mongo
+const mongoose = require('mongoose');
+
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
     // parse application/json
 app.use(bodyParser.json())
 
 
-//consultar
-app.get('/usuario', function(req, res) {
-    res.json("getUsuario");
+//importamos las rutas de usuario
+app.use(require('./routes/usuario'));
+
+//conectar a la BD
+//mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
+mongoose.connect(process.env.URLDB, (err, res) => {
+    if (err) throw err;
+
+    console.log("Base de datos conectada");
 });
 
-//crear
-app.post('/usuario', function(req, res) {
-
-    //recogemos los parametros por post haciendo uso de un paquete llamado
-    //npm body-parser
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        //especificamos un bad request pk faltan parametros
-        res.status(400).json({
-            ok: false,
-            mensaje: "El nombre es necesario"
-        });
-    } else {
-        res.json({
-            body
-        });
-    }
-
-});
-
-//actualizar
-app.put('/usuario/:id', function(req, res) {
-
-    let id = req.params.id;
-
-    res.json(id);
-});
-
-//eliminar
-app.delete('/usuario', function(req, res) {
-    res.json("deleteUsuario");
-});
+/*mongoose.connect('mongodb://localhost:27017/cafe', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err, resp) => {
+    if (err) throw err;
+    console.log("Base de datos conectada");
+});*/
 
 
 app.listen(process.env.PORT, () => {
