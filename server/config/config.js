@@ -22,3 +22,10 @@ else {
 }
 
 process.env.URLDB = urlDB;
+
+
+//VARIABLES DE VENCIMINENTO DEL TOKEN Y SEED O SEMILLA DE AUTH
+
+//60 segs x 60 mins
+process.env.JWT_CADUCIDAD_TOKEN = 60 * 60 * 60 * 24;
+process.env.JWT_SEED = process.env.JWT_SEED || 'este-es-el-seed-de-desarrollo'

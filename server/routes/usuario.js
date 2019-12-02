@@ -11,8 +11,13 @@ const _ = require('underscore');
 
 const app = express();
 
+//me traigo el middleware de autenticacion del token
+const { verificaToken, verificaAdminRol } = require('../middlewares/autenticacion');
+
 //consultar
-app.get('/usuario', function(req, res) {
+//sin middleware app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
+    //app.get('/usuario', function(req, res) {
 
     //listado total no paginado
     /*Usuario.find({})
@@ -74,7 +79,7 @@ app.get('/usuario', function(req, res) {
 });
 
 //crear
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdminRol], function(req, res) {
     //recogemos los parametros por post haciendo uso de un paquete llamado
     //npm body-parser
     let body = req.body;
@@ -123,7 +128,7 @@ app.post('/usuario', function(req, res) {
 });
 
 //actualizar registro
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRol], function(req, res) {
 
     let id = req.params.id;
 
@@ -156,7 +161,7 @@ app.put('/usuario/:id', function(req, res) {
 //eliminar
 //se pueden borrar fisicamente o marcando el estado = false
 //para mantener la integridad referencial
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRol], function(req, res) {
     let id = req.params.id;
 
     //delete duro

@@ -14,7 +14,14 @@ app.use(bodyParser.json())
 
 
 //importamos las rutas de usuario
+/*
 app.use(require('./routes/usuario'));
+//rutas de login
+app.use(require('./routes/login'));*/
+
+//importamos todas las rutas en una linea usando el index.js de la carpeta ruta
+app.use(require('./routes/index'));
+
 
 //conectar a la BD
 //mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
