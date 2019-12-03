@@ -28,4 +28,8 @@ process.env.URLDB = urlDB;
 
 //60 segs x 60 mins
 process.env.JWT_CADUCIDAD_TOKEN = 60 * 60 * 60 * 24;
-process.env.JWT_SEED = process.env.JWT_SEED || 'este-es-el-seed-de-desarrollo'
+process.env.JWT_SEED = process.env.JWT_SEED || 'este-es-el-seed-de-desarrollo';
+
+
+//google client id
+process.env.GOOGLE_CLIENT_ID = '396775027470-9703oo9i19gdci9ata8iaebbf1sgbame.apps.googleusercontent.com';

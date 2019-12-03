@@ -12,6 +12,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
     // parse application/json
 app.use(bodyParser.json())
 
+//importo el path es para poder acceder a ese public... 
+const path = require('path');
+//habilitar la carpeta publica para ser servida
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+console.log(path.resolve(__dirname, '../public'));
+
 
 //importamos las rutas de usuario
 /*
