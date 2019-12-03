@@ -30,6 +30,40 @@ let verificaToken = (req, res, next) => {
     });
 };
 
+/**
+ * pàra verificar token por url
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+let verificaTokenImg = (req, res, next) => {
+
+    //leemos el token que viene url 
+    let token = req.query.token;
+
+    jwt.verify(token, process.env.JWT_SEED, (err, decode) => {
+
+        if (err) {
+            //401 => no autorizado
+            return res.status(401).json({
+                ok: false,
+                err
+            });
+        }
+
+        //=> si sigo por aki => el decode contiene info del usuario => no error
+        //pk se que en l payload viene el usuario pk yo lo encripte
+        //en el request meto una variable usuario aunke despues no la devuelva...
+        //vale la idea de esto es tener en todos los request presente quien es el que esta haciendo las cosas
+        //quien inserta, quien consulta, etc...
+        req.usuario = decode.usuario;
+        next(); //continua la ejecucion de la peticion
+
+
+    });
+};
+
+
 
 /**
  * VERIFICA ADMIN ROLE
@@ -63,5 +97,6 @@ let verificaAdminRol = (req, res, next) => {
 //si aqui lo exporto con llaves => luego he de importarlo con desestructuracion
 module.exports = {
     verificaToken,
-    verificaAdminRol
+    verificaAdminRol,
+    verificaTokenImg
 };
